@@ -14,14 +14,16 @@ module com.gradecalculator.gradecalculator {
 
     opens com.gradecalculator.gradecalculator to javafx.fxml;
     opens com.gradecalculator.gradecalculator.controller;
-    opens com.gradecalculator.gradecalculator.dao;
-    opens com.gradecalculator.gradecalculator.service;
-    opens com.gradecalculator.gradecalculator.helper;
+    opens com.gradecalculator.gradecalculator.dao.persitentInit;
+    opens com.gradecalculator.gradecalculator.dao.EntityDao;
+//    opens com.gradecalculator.gradecalculator.service;
+//    opens com.gradecalculator.gradecalculator.helper;
     opens com.gradecalculator.gradecalculator.model;
     exports com.gradecalculator.gradecalculator;
     exports com.gradecalculator.gradecalculator.controller;
-    exports com.gradecalculator.gradecalculator.dao;
-    exports com.gradecalculator.gradecalculator.service;
-    exports com.gradecalculator.gradecalculator.helper;
+    exports com.gradecalculator.gradecalculator.dao.persitentInit;
+    exports com.gradecalculator.gradecalculator.dao.EntityDao;
+//    exports com.gradecalculator.gradecalculator.service;
+    exports com.gradecalculator.gradecalculator.helper.enums;
     exports com.gradecalculator.gradecalculator.model;
 }
