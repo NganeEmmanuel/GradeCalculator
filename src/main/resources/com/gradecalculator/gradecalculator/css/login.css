@@ -1,0 +1,41 @@
+.left-sidebar{
+    -fx-background-color: linear-gradient(to top right, #050041, #1908df);
+}
+.h1{
+    -fx-padding: 0px 0px 0px 4px;
+    -fx-border-color: #e38600;
+    -fx-border-width: 0px 0px 0px 4px;
+}
+.text-field{
+    -fx-background-color: -fx-text-box-border, -fx-background;
+    -fx-border-color: #050041;
+    -fx-background-insets: 0 0 1 0;
+    -fx-border-width: 0px 0px 1px 0px;
+}
+.text-field:focused{
+    -fx-border-color: #e38600;
+    -fx-background-insets: 0 0 4 0;
+    fx-border-width: 0px 0px 4px 0px;
+}
+
+.hyperlinks{
+    -fx-text-fill: #111111;
+}
+.hyperlinks:hover{
+    -fx-text-fill: #050041;
+}
+.login-btn{
+    -fx-background-color: linear-gradient(to top right,  #050041, #1908df);
+    -fx-border-width: 0;
+    -fx-text-fill: #fff;
+    -fx-cursor: hand;
+}
+.login-btn:hover{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,.5), 8, 0, 0, 0);
+    -fx-background-color: linear-gradient(to bottom left,  #050041, #1908df);
+}
+
+.warning-Msg{
+    -fx-background-color: #e16363;
+    -fx-alignment:center;
+}

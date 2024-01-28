@@ -1,6 +1,5 @@
 package com.gradecalculator.gradecalculator.model;
 
-import com.gradecalculator.gradecalculator.helper.enums.Grade;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public class Student {
     private String LastName;
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "student")
     private List<Performance> performances;
-    private Grade grade; // overall grade of the student -- average of all performances
+    private Double gpa; // overall grade of the student -- average of all performances
 
     public Student(String firstName, String middleName, String lastName) {
         FirstName = firstName;
@@ -67,12 +66,12 @@ public class Student {
         this.performances = performances;
     }
 
-    public Grade getGrade() {
-        return grade;
+    public Double getGrade() {
+        return gpa;
     }
 
-    public void setGrade(Grade grade) {
-        this.grade = grade;
+    public void setGpa(Double gpa) {
+        this.gpa = gpa;
     }
 
     @Override
@@ -83,7 +82,7 @@ public class Student {
                 ", middleName='" + middleName + '\'' +
                 ", LastName='" + LastName + '\'' +
                 ", performances=" + performances +
-                ", grade=" + grade +
+                ", gpa=" + gpa +
                 '}';
     }
 }

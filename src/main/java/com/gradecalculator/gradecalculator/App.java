@@ -21,7 +21,7 @@ public class App extends Application {
 //        authorities.add(UserAuthority.ADMIN);
 //        User user = new User("Ngane", "emmanuel", "example@gmail.com","test123", UserStatus.ACTIVE, authorities);
 //        userDao.add(user);
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("UI/login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         stage.setTitle("Hello!");
         stage.setScene(scene);
