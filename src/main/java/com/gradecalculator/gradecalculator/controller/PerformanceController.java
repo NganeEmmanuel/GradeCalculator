@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.util.List;
@@ -90,10 +91,10 @@ public class PerformanceController implements Initializable {
     private TextField calcProjectScoreInput;
 
     @FXML
-    private TableColumn<Performance, String> courseCodeColumn;
+    private TableColumn<Performance, Course> courseCodeColumn;
 
     @FXML
-    private TableColumn<Performance, String> courseNameColumn;
+    private TableColumn<Performance, Course> courseNameColumn;
 
     @FXML
     private ComboBox<Course> courseSelectorInput;
@@ -188,18 +189,43 @@ public class PerformanceController implements Initializable {
 
            //fill the performance table wth the selected student's performance if student performance is not empty
            if(!selectedStudent.getPerformances().isEmpty()){
+               performanceTableView.getColumns().clear();
                 // map the columns with the database data table columns
-                courseCodeColumn.setCellValueFactory(new PropertyValueFactory<>("performances.course.courseCode"));
-                courseNameColumn.setCellValueFactory(new PropertyValueFactory<>("performances.course.courseName"));
-                assignmentsColumn.setCellValueFactory(new PropertyValueFactory<>("performances.homeWorkScore"));
-                caColumn.setCellValueFactory(new PropertyValueFactory<>("performances.caScore"));
-                projectColumn.setCellValueFactory(new PropertyValueFactory<>("performances.projectScore"));
-                examColumn.setCellValueFactory(new PropertyValueFactory<>("performances.examScore"));
-                attendanceColumn.setCellValueFactory(new PropertyValueFactory<>("performances.attendanceScore"));
-                participationColumn.setCellValueFactory(new PropertyValueFactory<>("performances.participationScore"));
-                gradeColumn.setCellValueFactory(new PropertyValueFactory<>("performances.grade"));
+                courseCodeColumn.setCellValueFactory(new PropertyValueFactory<>("course"));
+                courseCodeColumn.setCellFactory(column -> new TableCell<>(){
+                    @Override
+                    protected void updateItem(Course course, boolean empty){
+                        super.updateItem(course, empty);
+                        if(course == null || empty){
+                            setText(null);
+                        }else {
+                            setText(course.getCourseCode());
+                        }
+                    }
+                });
+                courseNameColumn.setCellValueFactory(new PropertyValueFactory<>("course"));
+               courseNameColumn.setCellFactory(column -> new TableCell<>(){
+                   @Override
+                   protected void updateItem(Course course, boolean empty){
+                       super.updateItem(course, empty);
+                       if(course == null || empty){
+                           setText(null);
+                       }else {
+                           setText(course.getCourseName());
+                       }
+                   }
+               });
+
+                assignmentsColumn.setCellValueFactory(new PropertyValueFactory<>("homeWorkScore"));
+                caColumn.setCellValueFactory(new PropertyValueFactory<>("caScore"));
+                projectColumn.setCellValueFactory(new PropertyValueFactory<>("projectScore"));
+                examColumn.setCellValueFactory(new PropertyValueFactory<>("examScore"));
+                attendanceColumn.setCellValueFactory(new PropertyValueFactory<>("attendanceScore"));
+                participationColumn.setCellValueFactory(new PropertyValueFactory<>("participationScore"));
+                gradeColumn.setCellValueFactory(new PropertyValueFactory<>("grade"));
 
                 // add all columns to table
+
                 performanceTableView.getColumns().addAll(courseCodeColumn, courseNameColumn, assignmentsColumn, caColumn, projectColumn, examColumn, attendanceColumn, participationColumn, gradeColumn);
 
                 //add performance data to table
@@ -348,6 +374,29 @@ public class PerformanceController implements Initializable {
             GradeStudentsData.addAll(students);
             this.addGradeTableView.setItems(GradeStudentsData);
         }
+        courseSelectorInput.setConverter(new StringConverter<Course>() {
+            @Override
+            public String toString(Course course) {
+                return course == null? null : course.getCourseCode() + "  " + course.getCourseName();
+            }
+
+            @Override
+            public Course fromString(String s) {
+                return null;
+            }
+        });
+
+        courseSelectorInput.setCellFactory(param -> new ListCell<Course>(){
+            @Override
+            protected void updateItem(Course item, boolean empty){
+                super.updateItem(item, empty);
+                if(item == null || empty){
+                    setText(null);
+                }else{
+                    setText(item.getCourseCode() + " " + item.getCourseName());
+                }
+            }
+        });
         courseSelectorInput.getItems().addAll(courseService.getAllCourses());
 
         //clear form and display a success message
