@@ -11,19 +11,23 @@ public class Student {
     @Id
     private Long id;
     @Column(name = "first_name", nullable = false)
-    private String FirstName;
+    private String firstName;
     @Column(name = "middle_name")
     private String middleName;
+
     @Column(name = "last_name")
-    private String LastName;
+    private String lastName;
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "student")
     private List<Performance> performances;
     private Double gpa; // overall grade of the student -- average of all performances
 
+    public Student() {
+    }
+
     public Student(String firstName, String middleName, String lastName) {
-        FirstName = firstName;
+        this.firstName = firstName;
         this.middleName = middleName;
-        LastName = lastName;
+        this.lastName = lastName;
     }
 
     public Long getId() {
@@ -35,11 +39,11 @@ public class Student {
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
-        FirstName = firstName;
+        this.firstName = firstName;
     }
 
     public String getMiddleName() {
@@ -51,11 +55,11 @@ public class Student {
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-        LastName = lastName;
+        this.lastName = lastName;
     }
 
     public List<Performance> getPerformances() {
@@ -66,7 +70,7 @@ public class Student {
         this.performances = performances;
     }
 
-    public Double getGrade() {
+    public Double getGpa() {
         return gpa;
     }
 
@@ -78,9 +82,9 @@ public class Student {
     public String toString() {
         return "Student{" +
                 "id=" + id +
-                ", FirstName='" + FirstName + '\'' +
+                ", FirstName='" + firstName + '\'' +
                 ", middleName='" + middleName + '\'' +
-                ", LastName='" + LastName + '\'' +
+                ", LastName='" + lastName + '\'' +
                 ", performances=" + performances +
                 ", gpa=" + gpa +
                 '}';

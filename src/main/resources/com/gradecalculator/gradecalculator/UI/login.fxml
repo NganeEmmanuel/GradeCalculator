@@ -21,7 +21,7 @@
          <children>
             <AnchorPane layoutX="8.0" layoutY="8.0" prefHeight="604.0" prefWidth="313.0" styleClass="left-sidebar" stylesheets="@../css/login.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="466.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Label layoutX="18.0" layoutY="84.0" text="BANK MANAGEMENT SYSTEM">
+                  <Label layoutX="18.0" layoutY="84.0" text="Student Grade Calculator System">
                      <font>
                         <Font name="Bell MT Bold" size="18.0" />
                      </font>
@@ -42,12 +42,12 @@
                         </LinearGradient>
                      </textFill>
                   </Label>
-                  <Label layoutX="58.0" layoutY="120.0" text="Safe and Manage Your Income" textFill="#fffefd">
+                  <Label layoutX="40.0" layoutY="123.0" text="Easily Manage your Students'Grades" textFill="#fffefd">
                      <font>
                         <Font name="Calibri" size="15.0" />
                      </font>
                   </Label>
-                  <Label layoutX="25.0" layoutY="422.0" text="Banking made easy. Save and reliable" textFill="#e38600">
+                  <Label layoutX="25.0" layoutY="422.0" text="Student Grade Calculation made easy" textFill="#e38600">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -93,7 +93,7 @@
                   <Button fx:id="loginBtn" layoutX="230.0" layoutY="370.0" mnemonicParsing="false" onMouseClicked="#login" prefHeight="35.0" prefWidth="126.0" styleClass="login-btn" stylesheets="@../css/login.css" text="Login" />
                   <FontAwesomeIconView fx:id="loginSpinner" disable="true" fill="WHITE" glyphName="SPINNER" layoutX="312.0" layoutY="393.0" size="17" visible="false" />
                   <TextField fx:id="password2" layoutX="159.0" layoutY="204.0" prefHeight="36.0" prefWidth="202.0" promptText="Enter password" styleClass="text-field" stylesheets="@../css/login.css" visible="false" />
-                  <FontAwesomeIconView fx:id="showPassword" fill="#050041" glyphName="EYE" layoutX="340.0" layoutY="227.0" onMouseClicked="#showPassword" />
+                  <FontAwesomeIconView fill="#050041" glyphName="EYE" layoutX="340.0" layoutY="227.0" onMouseClicked="#showPassword" />
                   <Label fx:id="warningMsg" layoutX="66.0" layoutY="88.0" prefHeight="35.0" prefWidth="281.0" styleClass="warning-Msg" stylesheets="@../css/login.css" text="warning!" textAlignment="CENTER" visible="false">
                      <font>
                         <Font name="Calibri" size="14.0" />

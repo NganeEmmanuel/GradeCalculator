@@ -1,4 +1,4 @@
-package com.gradecalculator.gradecalculator.service.encryptors;
+package com.gradecalculator.gradecalculator.service.encryptorsService;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 

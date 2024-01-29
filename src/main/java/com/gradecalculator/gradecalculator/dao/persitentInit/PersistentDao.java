@@ -33,7 +33,7 @@ public abstract class PersistentDao<T, U> {
     /**
      *
      * @param t object type to be persisted to the database
-     * @return the object being persisted to the database or throw and exception if there is an issue
+     * @return the object being persisted to the database, throws and exception, or returns if there is an issue
      * @Example add(userObject)
      */
     public T add(T t) {
@@ -59,7 +59,7 @@ public abstract class PersistentDao<T, U> {
 
     /**
      *
-     * @return a complete list of all objects in the database of the entity type
+     * @return a complete list of all objects/entries in the database of the entity type or null if no entry is found
      * @Example findAll() -- will return a list of objets equals to the total number of rows in the database table/entity
      */
     public List<T> findAll() {
@@ -105,7 +105,9 @@ public abstract class PersistentDao<T, U> {
      * @Example findByIdPrivately(idObject) -- findByIdPrivately(1), findByIdPrivately(10)
      */
     private Optional<T> findByIdPrivately(U id){
-        return Optional.ofNullable(entityManager.find(entityClass, id));
+        T t = entityManager.find(entityClass, id);
+        entityManager.getTransaction().commit();
+        return Optional.ofNullable(t);
     }
 
     /**

@@ -28,6 +28,9 @@ public class User {
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "courseInstructor")
     private List<Course> courses;
 
+    public User() {
+    }
+
     public User(String name, String username, String email, String password, UserStatus userStatus, List<UserAuthority> userAuthorities) {
         this.name = name;
         this.username = username;
@@ -111,7 +114,6 @@ public class User {
                 ", password='" + password + '\'' +
                 ", userStatus=" + userStatus +
                 ", userAuthorities=" + userAuthorities +
-                ", courses=" + courses +
                 '}';
     }
 }

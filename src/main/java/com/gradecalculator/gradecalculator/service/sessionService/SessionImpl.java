@@ -1,8 +1,7 @@
-package com.gradecalculator.gradecalculator.service.session.sessionClass;
+package com.gradecalculator.gradecalculator.service.sessionService;
 
 
 import com.gradecalculator.gradecalculator.model.User;
-import com.gradecalculator.gradecalculator.service.session.sessionInterface.Session;
 
 @SuppressWarnings("unused")
 public final class SessionImpl implements Session<SessionImpl, User> {

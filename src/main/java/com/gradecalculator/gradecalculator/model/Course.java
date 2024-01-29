@@ -2,6 +2,8 @@ package com.gradecalculator.gradecalculator.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @SuppressWarnings("unused")
 public class Course {
@@ -15,6 +17,11 @@ public class Course {
     private String courseName;
     @Column(name = "course_code")
     private String courseCode;
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "course")
+    private List<Performance> performances;
+
+    public Course() {
+    }
 
     public Course(String courseName, String courseCode) {
         this.courseName = courseName;

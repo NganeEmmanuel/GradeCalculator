@@ -1,6 +1,5 @@
 package com.gradecalculator.gradecalculator.model;
 
-import com.gradecalculator.gradecalculator.helper.enums.Grade;
 import jakarta.persistence.*;
 
 @SuppressWarnings("unused")
@@ -11,8 +10,7 @@ public class Performance {
     private Long id;
     @ManyToOne
     private Student student;
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinColumn(referencedColumnName = "id")
+    @ManyToOne
     private Course course;
     @Column(name = "home_work_score")
     private Double homeWorkScore;
@@ -23,10 +21,13 @@ public class Performance {
     @Column(name = "project_score")
     private Double projectScore;
     @Column(name = "attendance_score")
-    private Double AttendanceScore;
+    private Double attendanceScore;
     @Column(name = "participation_score")
     private Double participationScore;
-    private Grade grade;
+    private String grade;
+
+    public Performance() {
+    }
 
     public Performance(Student student, Course course) {
         this.student = student;
@@ -90,11 +91,11 @@ public class Performance {
     }
 
     public Double getAttendanceScore() {
-        return AttendanceScore;
+        return attendanceScore;
     }
 
     public void setAttendanceScore(Double attendanceScore) {
-        AttendanceScore = attendanceScore;
+        this.attendanceScore = attendanceScore;
     }
 
     public Double getParticipationScore() {
@@ -105,25 +106,25 @@ public class Performance {
         this.participationScore = participationScore;
     }
 
-    public Grade getGrade() {
+    public String getGrade() {
         return grade;
     }
 
-    public void setGrade(Grade grade) {
+    public void setGrade(String grade) {
         this.grade = grade;
     }
 
     @Override
-    public String toString() {
+    public java.lang.String toString() {
         return "Performance{" +
                 "id=" + id +
-                ", student=" + student +
+//                ", student=" + student +
                 ", course=" + course +
                 ", homeWorkScore=" + homeWorkScore +
                 ", caScore=" + caScore +
                 ", examScore=" + examScore +
                 ", projectScore=" + projectScore +
-                ", AttendanceScore=" + AttendanceScore +
+                ", AttendanceScore=" + attendanceScore +
                 ", participationScore=" + participationScore +
                 ", grade=" + grade +
                 '}';

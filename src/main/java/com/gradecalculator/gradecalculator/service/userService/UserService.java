@@ -1,4 +1,4 @@
-package com.gradecalculator.gradecalculator.service;
+package com.gradecalculator.gradecalculator.service.userService;
 
 
 import com.gradecalculator.gradecalculator.dao.EntityDao.UserDao;

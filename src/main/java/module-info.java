@@ -23,7 +23,12 @@ module com.gradecalculator.gradecalculator {
     exports com.gradecalculator.gradecalculator.controller;
     exports com.gradecalculator.gradecalculator.dao.persitentInit;
     exports com.gradecalculator.gradecalculator.dao.EntityDao;
-//    exports com.gradecalculator.gradecalculator.service;
     exports com.gradecalculator.gradecalculator.helper.enums;
     exports com.gradecalculator.gradecalculator.model;
+    exports com.gradecalculator.gradecalculator.service.userService;
+    opens com.gradecalculator.gradecalculator.service.userService;
+    exports com.gradecalculator.gradecalculator.service.studentService;
+    opens com.gradecalculator.gradecalculator.service.studentService;
+    exports com.gradecalculator.gradecalculator.service.loginService;
+    opens com.gradecalculator.gradecalculator.service.loginService;
 }
