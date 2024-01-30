@@ -3,6 +3,7 @@ package com.gradecalculator.gradecalculator.service.studentService;
 import com.gradecalculator.gradecalculator.dao.EntityDao.StudentDao;
 import com.gradecalculator.gradecalculator.model.Student;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentService {
@@ -22,5 +23,10 @@ public class StudentService {
 
     public void addStudent(Student student) {
         studentDao.add(student);
+    }
+
+    public List<Student> getStudentsQuery(String query) {
+        List<Student> students = studentDao.runQuery(query, 0);
+        return students != null? students : new ArrayList<>();
     }
 }

@@ -1,24 +1,31 @@
 package com.gradecalculator.gradecalculator.controller;
 
+import com.gradecalculator.gradecalculator.dao.EntityDao.UserDao;
+import com.gradecalculator.gradecalculator.helper.enums.UserAuthority;
+import com.gradecalculator.gradecalculator.helper.enums.UserStatus;
 import com.gradecalculator.gradecalculator.model.Course;
 import com.gradecalculator.gradecalculator.model.Performance;
 import com.gradecalculator.gradecalculator.model.Student;
+import com.gradecalculator.gradecalculator.model.User;
 import com.gradecalculator.gradecalculator.service.GradeCalculatorService.GradeCalculatorService;
 import com.gradecalculator.gradecalculator.service.courseService.CourseService;
+import com.gradecalculator.gradecalculator.service.encryptorsService.Encryptor;
 import com.gradecalculator.gradecalculator.service.performanceService.PerformanceService;
 import com.gradecalculator.gradecalculator.service.studentService.StudentService;
 import com.gradecalculator.gradecalculator.service.validationService.InputValidator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -171,6 +178,9 @@ public class PerformanceController implements Initializable {
     @FXML
     private Button addGradeBtn;
 
+    @FXML
+    private TextField searchStudentInput;
+
     private ObservableList<Student> studentsData = FXCollections.observableArrayList();;
     private ObservableList<Performance> performancesData = FXCollections.observableArrayList();;
 
@@ -189,44 +199,8 @@ public class PerformanceController implements Initializable {
 
            //fill the performance table wth the selected student's performance if student performance is not empty
            if(!selectedStudent.getPerformances().isEmpty()){
-               performanceTableView.getColumns().clear();
+               performanceTableView.getItems().clear();
                 // map the columns with the database data table columns
-                courseCodeColumn.setCellValueFactory(new PropertyValueFactory<>("course"));
-                courseCodeColumn.setCellFactory(column -> new TableCell<>(){
-                    @Override
-                    protected void updateItem(Course course, boolean empty){
-                        super.updateItem(course, empty);
-                        if(course == null || empty){
-                            setText(null);
-                        }else {
-                            setText(course.getCourseCode());
-                        }
-                    }
-                });
-                courseNameColumn.setCellValueFactory(new PropertyValueFactory<>("course"));
-               courseNameColumn.setCellFactory(column -> new TableCell<>(){
-                   @Override
-                   protected void updateItem(Course course, boolean empty){
-                       super.updateItem(course, empty);
-                       if(course == null || empty){
-                           setText(null);
-                       }else {
-                           setText(course.getCourseName());
-                       }
-                   }
-               });
-
-                assignmentsColumn.setCellValueFactory(new PropertyValueFactory<>("homeWorkScore"));
-                caColumn.setCellValueFactory(new PropertyValueFactory<>("caScore"));
-                projectColumn.setCellValueFactory(new PropertyValueFactory<>("projectScore"));
-                examColumn.setCellValueFactory(new PropertyValueFactory<>("examScore"));
-                attendanceColumn.setCellValueFactory(new PropertyValueFactory<>("attendanceScore"));
-                participationColumn.setCellValueFactory(new PropertyValueFactory<>("participationScore"));
-                gradeColumn.setCellValueFactory(new PropertyValueFactory<>("grade"));
-
-                // add all columns to table
-
-                performanceTableView.getColumns().addAll(courseCodeColumn, courseNameColumn, assignmentsColumn, caColumn, projectColumn, examColumn, attendanceColumn, participationColumn, gradeColumn);
 
                 //add performance data to table
                 performancesData.addAll(selectedStudent.getPerformances());
@@ -290,9 +264,30 @@ public class PerformanceController implements Initializable {
         }
     }
 
+    private final UserDao userDao = new UserDao();
     @FXML
     void addInstructor(MouseEvent event) {
+        if(!instructorUsernameInput.getText().isBlank() && !instructorNameInput.getText().isBlank() &&
+            !instructorEmailInput.getText().isBlank() && !instructorPasswordInput.getText().isBlank()
+        ){
+            List<UserAuthority> authorities = new ArrayList<>();
+            authorities.add(UserAuthority.INSTRUCTOR);
+            User user = new User(instructorNameInput.getText(), instructorUsernameInput.getText(),
+                        instructorEmailInput.getText(), Encryptor.encrypt(instructorPasswordInput.getText()),
+                        UserStatus.ACTIVE, authorities
+            );
+            userDao.add(user);
+            if(user.getId() != null){
+                instructorNameInput.setText("");
+                instructorUsernameInput.setText("");
+                instructorEmailInput.setText("");
+                instructorPasswordInput.setText("");
+                instructorErrorMessage.setText("Instructor added successfully"); //todo make error animated
+            }else{
+                instructorErrorMessage.setText("An error occurred while trying to add instructor");
+            }
 
+        }
     }
 
     @FXML
@@ -315,16 +310,29 @@ public class PerformanceController implements Initializable {
 
     }
 
-    @FXML
-    void searchStudent(MouseEvent event) {
 
+    @FXML
+    void searchStudents(KeyEvent event)  {
+        String keyword = searchStudentInput.getText();
+        if(!keyword.isBlank()){
+            String query = "SELECT t FROM Student t WHERE t.firstName LIKE '%" + keyword + "%' OR t.middleName LIKE '%" + keyword + "%' OR t.lastName LIKE '%" + keyword + "%'";
+            studentTableView.getItems().clear();
+            List<Student> students = studentService.getStudentsQuery(query);
+            studentTableView.getItems().addAll(students);
+        }else{
+            performanceTableView.getItems().clear();
+            studentTableView.getItems().clear();
+            List<Student> students = studentService.getAllStudents();
+            studentTableView.getItems().addAll(students);
+        }
     }
 
     @Override
     //prepopulate the student table on dashboard load
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        refreshStudentTable();
-        refreshGradeStudentTable();
+        initializeStudentTable();
+        initializeGradeStudentTable();
+        initializePerformanceTable();
     }
 
     private final CourseService courseService = new CourseService();
@@ -335,7 +343,7 @@ public class PerformanceController implements Initializable {
         addGradeBtn.setDisable(false);
     }
 
-    private void refreshStudentTable(){
+    private void initializeStudentTable(){
         // map the columns with the database data table columns
         this.id.setCellValueFactory(new PropertyValueFactory<>("id"));
         this.firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -355,7 +363,7 @@ public class PerformanceController implements Initializable {
     }
 
     private ObservableList<Student> GradeStudentsData = FXCollections.observableArrayList();
-    private void refreshGradeStudentTable(){
+    private void initializeGradeStudentTable(){
         // map the columns with the database data table columns
         this.addGradeIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         this.addGradeFirstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -406,6 +414,47 @@ public class PerformanceController implements Initializable {
         examScoreInput.setText("0");
         attendanceScoreInput.setText("0");
         participationScoreInput.setText("0");
+
+    }
+
+    private void initializePerformanceTable(){
+        performanceTableView.getColumns().clear();
+        courseCodeColumn.setCellValueFactory(new PropertyValueFactory<>("course"));
+        courseCodeColumn.setCellFactory(column -> new TableCell<>(){
+            @Override
+            protected void updateItem(Course course, boolean empty){
+                super.updateItem(course, empty);
+                if(course == null || empty){
+                    setText(null);
+                }else {
+                    setText(course.getCourseCode());
+                }
+            }
+        });
+        courseNameColumn.setCellValueFactory(new PropertyValueFactory<>("course"));
+        courseNameColumn.setCellFactory(column -> new TableCell<>(){
+            @Override
+            protected void updateItem(Course course, boolean empty){
+                super.updateItem(course, empty);
+                if(course == null || empty){
+                    setText(null);
+                }else {
+                    setText(course.getCourseName());
+                }
+            }
+        });
+
+        assignmentsColumn.setCellValueFactory(new PropertyValueFactory<>("homeWorkScore"));
+        caColumn.setCellValueFactory(new PropertyValueFactory<>("caScore"));
+        projectColumn.setCellValueFactory(new PropertyValueFactory<>("projectScore"));
+        examColumn.setCellValueFactory(new PropertyValueFactory<>("examScore"));
+        attendanceColumn.setCellValueFactory(new PropertyValueFactory<>("attendanceScore"));
+        participationColumn.setCellValueFactory(new PropertyValueFactory<>("participationScore"));
+        gradeColumn.setCellValueFactory(new PropertyValueFactory<>("grade"));
+
+        // add all columns to table
+
+        performanceTableView.getColumns().addAll(courseCodeColumn, courseNameColumn, assignmentsColumn, caColumn, projectColumn, examColumn, attendanceColumn, participationColumn, gradeColumn);
 
     }
 }
