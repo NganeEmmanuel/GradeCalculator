@@ -35,6 +35,10 @@ public class App extends Application {
 //        Performance performance = new Performance(studentDao.findById(1L).orElse(null), courseDao.findById(1L).orElse(null));
 //        PerformanceDao performanceDao = new PerformanceDao();
 //        performanceDao.add(performance);
+//        System.setProperty("javafx.runtime.version", "20.0.2");
+        System.out.println("JavaFX Version: " + System.getProperty("javafx.version"));
+        System.out.println("JavaFX Runtime Version: " + System.getProperty("javafx.runtime.version"));
+
         System.out.println(InputValidator.isDouble(""));
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("UI/login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 779, 520);

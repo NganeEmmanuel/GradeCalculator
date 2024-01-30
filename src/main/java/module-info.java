@@ -4,9 +4,6 @@ module com.gradecalculator.gradecalculator {
     requires javafx.web;
 
     requires org.controlsfx.controls;
-    requires com.dlsc.formsfx;
-    requires net.synedra.validatorfx;
-    requires eu.hansolo.tilesfx;
     requires org.hibernate.orm.core;
     requires jakarta.persistence;
     requires bcrypt;
