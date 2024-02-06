@@ -63,7 +63,7 @@
                                                                   <Label layoutX="14.0" layoutY="123.0" text="Last Name:" />
                                                                   <Label fx:id="viewLastNameLabel" layoutX="107.0" layoutY="123.0" text="Ngane Emmanuel" />
                                                                   <Separator layoutX="258.0" layoutY="36.0" orientation="VERTICAL" prefHeight="116.0" prefWidth="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-                                                                  <Button layoutX="303.0" layoutY="82.0" mnemonicParsing="false" onMouseClicked="#generateReport" text="Generate Report" AnchorPane.rightAnchor="114.0" />
+                                                                  <Button fx:id="generateReportBtn" disable="true" layoutX="303.0" layoutY="82.0" mnemonicParsing="false" onMouseClicked="#generateReport" text="Generate Report" AnchorPane.rightAnchor="114.0" />
                                                                </children>
                                                             </AnchorPane>
                                                             <AnchorPane layoutX="-1.0" layoutY="161.0" prefHeight="367.0" prefWidth="521.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="161.0">
@@ -242,6 +242,32 @@
                                           <TextField fx:id="instructorPasswordInput" layoutX="158.0" layoutY="198.0" styleClass="text-field" stylesheets="@../css/login.css" AnchorPane.rightAnchor="19.0" />
                                           <Button layoutX="92.0" layoutY="304.0" mnemonicParsing="false" onMouseClicked="#addInstructor" prefHeight="25.0" prefWidth="143.0" styleClass="filter-applyBtn" stylesheets="@../css/accountView.css" text="Add Instructor" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="91.0" />
                                           <Label fx:id="instructorErrorMessage" layoutX="22.0" layoutY="253.0" prefHeight="27.0" prefWidth="289.0" style="-fx-alignment: center;" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="15.0" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab text="Add Course">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <AnchorPane layoutX="226.0" layoutY="42.0" prefHeight="400.0" prefWidth="326.0" styleClass="main-header" stylesheets="@../css/accountView.css">
+                                       <children>
+                                          <Label layoutX="118.0" layoutY="14.0" prefHeight="17.0" prefWidth="70.0" text="Add Course" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="138.0">
+                                             <font>
+                                                <Font name="Calibri Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Separator layoutX="5.0" layoutY="44.0" prefHeight="0.0" prefWidth="316.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                                          <Label layoutX="22.0" layoutY="76.0" text="Course Name* :" />
+                                          <TextField fx:id="courseNameInput" layoutX="158.0" layoutY="72.0" styleClass="text-field" stylesheets="@../css/login.css" AnchorPane.rightAnchor="19.0" />
+                                          <Label layoutX="22.0" layoutY="118.0" text="Course  code * :" />
+                                          <TextField fx:id="courseCodeInput" layoutX="158.0" layoutY="114.0" styleClass="text-field" stylesheets="@../css/login.css" AnchorPane.rightAnchor="19.0" />
+                                          <Label layoutX="22.0" layoutY="160.0" text="Instructor * :" />
+                                          <Button layoutX="92.0" layoutY="304.0" mnemonicParsing="false" onMouseClicked="#addCourse" prefHeight="25.0" prefWidth="143.0" styleClass="filter-applyBtn" stylesheets="@../css/accountView.css" text="Add Course" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="91.0" />
+                                          <Label fx:id="courseErrorMessage1" layoutX="22.0" layoutY="253.0" prefHeight="27.0" prefWidth="289.0" style="-fx-alignment: center;" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="15.0" />
+                                          <ComboBox fx:id="courseInstructorInput" layoutX="160.0" layoutY="156.0" prefWidth="150.0" />
                                        </children>
                                     </AnchorPane>
                                  </children>

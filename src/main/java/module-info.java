@@ -8,6 +8,7 @@ module com.gradecalculator.gradecalculator {
     requires jakarta.persistence;
     requires bcrypt;
     requires de.jensd.fx.glyphs.fontawesome;
+    requires jxl;
 
     opens com.gradecalculator.gradecalculator to javafx.fxml;
     opens com.gradecalculator.gradecalculator.controller;

@@ -29,4 +29,8 @@ public class StudentService {
         List<Student> students = studentDao.runQuery(query, 0);
         return students != null? students : new ArrayList<>();
     }
+
+    public Student getStudentByID(Long id) {
+        return studentDao.findById(id).orElse(null);
+    }
 }

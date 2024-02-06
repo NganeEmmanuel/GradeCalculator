@@ -19,4 +19,8 @@ public class CourseService {
     public List<Course> getAllCourses() {
         return courseDao.findAll();
     }
+
+    public void addCourse(Course course) {
+        courseDao.add(course);
+    }
 }

@@ -11,7 +11,9 @@ import com.gradecalculator.gradecalculator.service.GradeCalculatorService.GradeC
 import com.gradecalculator.gradecalculator.service.courseService.CourseService;
 import com.gradecalculator.gradecalculator.service.encryptorsService.Encryptor;
 import com.gradecalculator.gradecalculator.service.performanceService.PerformanceService;
+import com.gradecalculator.gradecalculator.service.reportService.ReportGeneratorService;
 import com.gradecalculator.gradecalculator.service.studentService.StudentService;
+import com.gradecalculator.gradecalculator.service.validationService.EmailValidator;
 import com.gradecalculator.gradecalculator.service.validationService.InputValidator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +21,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
@@ -107,6 +108,18 @@ public class PerformanceController implements Initializable {
     private ComboBox<Course> courseSelectorInput;
 
     @FXML
+    private TextField courseCodeInput;
+
+    @FXML
+    private Label courseErrorMessage1;
+
+    @FXML
+    private ComboBox<User> courseInstructorInput;
+
+    @FXML
+    private TextField courseNameInput;
+
+    @FXML
     private TableColumn<Performance, Double> examColumn;
 
     @FXML
@@ -155,6 +168,9 @@ public class PerformanceController implements Initializable {
     private TextField participationScoreInput;
 
     @FXML
+    private Button generateReportBtn;
+
+    @FXML
     private TableView<Performance> performanceTableView;
 
     @FXML
@@ -181,12 +197,36 @@ public class PerformanceController implements Initializable {
     @FXML
     private TextField searchStudentInput;
 
-    private ObservableList<Student> studentsData = FXCollections.observableArrayList();;
-    private ObservableList<Performance> performancesData = FXCollections.observableArrayList();;
+    private ObservableList<Student> studentsData = FXCollections.observableArrayList();
+    private ObservableList<Performance> performancesData = FXCollections.observableArrayList();
 
     @FXML
     void CalculateAverage(MouseEvent event) {
+        String assignmentScore = calcAssignmentScoreInput.getText();
+        String caScore = calcCAScoreInput.getText();
+        String projectScore = calcProjectScoreInput.getText();
+        String examScore = calcExamScoreInput.getText();
+        String attendanceScore = calcAttendanceScoreInput.getText();
+        String participationScore = calcParticipationScoreInput.getText();
 
+        // check if inputs are numbers and can be converted to double
+        if(InputValidator.isDouble(assignmentScore) && InputValidator.isDouble(caScore) &&
+                InputValidator.isDouble(projectScore) && InputValidator.isDouble(examScore) &&
+                InputValidator.isDouble(attendanceScore) && InputValidator.isDouble(participationScore)
+        ){
+            // fill the score for each assessment type
+
+            String grade = gradeCalculatorService.calculateGrade(
+                    Double.parseDouble(assignmentScore), Double.parseDouble(caScore),
+                    Double.parseDouble(projectScore), Double.parseDouble(examScore),
+                    Double.parseDouble(attendanceScore), Double.parseDouble(participationScore)
+            );
+
+            calcGradeErrorMessage.setText("Your Grade is: " + grade);
+            //todo make the error and success message animated to setTimeOut
+        }else{
+            calcGradeErrorMessage.setText("Please fill in proper scores");
+        }
     }
 
     @FXML
@@ -206,6 +246,8 @@ public class PerformanceController implements Initializable {
                 performancesData.addAll(selectedStudent.getPerformances());
                 performanceTableView.setItems(performancesData);
             }
+
+           enableGenerateReportBtn();
         }
     }
 
@@ -270,21 +312,26 @@ public class PerformanceController implements Initializable {
         if(!instructorUsernameInput.getText().isBlank() && !instructorNameInput.getText().isBlank() &&
             !instructorEmailInput.getText().isBlank() && !instructorPasswordInput.getText().isBlank()
         ){
-            List<UserAuthority> authorities = new ArrayList<>();
-            authorities.add(UserAuthority.INSTRUCTOR);
-            User user = new User(instructorNameInput.getText(), instructorUsernameInput.getText(),
+            if(EmailValidator.isEmailValid(instructorEmailInput.getText())) {
+                List<UserAuthority> authorities = new ArrayList<>();
+                authorities.add(UserAuthority.INSTRUCTOR);
+                User user = new User(instructorNameInput.getText(), instructorUsernameInput.getText(),
                         instructorEmailInput.getText(), Encryptor.encrypt(instructorPasswordInput.getText()),
                         UserStatus.ACTIVE, authorities
-            );
-            userDao.add(user);
-            if(user.getId() != null){
-                instructorNameInput.setText("");
-                instructorUsernameInput.setText("");
-                instructorEmailInput.setText("");
-                instructorPasswordInput.setText("");
-                instructorErrorMessage.setText("Instructor added successfully"); //todo make error animated
+                );
+                userDao.add(user);
+
+                if (user.getId() != null) {
+                    instructorNameInput.setText("");
+                    instructorUsernameInput.setText("");
+                    instructorEmailInput.setText("");
+                    instructorPasswordInput.setText("");
+                    instructorErrorMessage.setText("Instructor added successfully"); //todo make error animated
+                } else {
+                    instructorErrorMessage.setText("An error occurred while trying to add instructor");
+                }
             }else{
-                instructorErrorMessage.setText("An error occurred while trying to add instructor");
+                instructorErrorMessage.setText(("Please enter a valid email address"));
             }
 
         }
@@ -302,12 +349,36 @@ public class PerformanceController implements Initializable {
             }
         }else{
             // todo display error message. animate it to setTimeOut
+            addStudentErrorMessage.setText("Please fill all required fields");
+        }
+    }
+
+    @FXML
+    void addCourse(MouseEvent event) {
+        User instructor = courseInstructorInput.getSelectionModel().getSelectedItem(); //get instructor
+        if (instructor != null && !courseNameInput.getText().isBlank() && !courseCodeInput.getText().isBlank()) {
+            Course course = new Course(courseNameInput.getText(), courseCodeInput.getText());
+            course.setCourseInstructor(instructor);
+            courseService.addCourse(course);
+            if(course.getId() != null){
+                courseSelectorInput.getItems().add(course);
+                courseNameInput.setText("");
+                courseCodeInput.setText("");
+                courseErrorMessage1.setText("Course added successfully");
+            }else{
+                courseErrorMessage1.setText("Error occurred while adding course. try again");
+            }
+        }else{
+            courseErrorMessage1.setText("Please fill all fields and try again!");
         }
     }
 
     @FXML
     void generateReport(MouseEvent event) {
-
+        Student selectedStudent = studentTableView.getSelectionModel().getSelectedItem(); //get selected student
+        if (selectedStudent != null) {
+            ReportGeneratorService.generateReport(selectedStudent.getId());
+        }
     }
 
 
@@ -333,6 +404,7 @@ public class PerformanceController implements Initializable {
         initializeStudentTable();
         initializeGradeStudentTable();
         initializePerformanceTable();
+        prepopulateInstructor();
     }
 
     private final CourseService courseService = new CourseService();
@@ -341,6 +413,10 @@ public class PerformanceController implements Initializable {
     @FXML
     void enableAddGrade(MouseEvent event) {
         addGradeBtn.setDisable(false);
+    }
+
+    void enableGenerateReportBtn() {
+        generateReportBtn.setDisable(false);
     }
 
     private void initializeStudentTable(){
@@ -456,5 +532,36 @@ public class PerformanceController implements Initializable {
 
         performanceTableView.getColumns().addAll(courseCodeColumn, courseNameColumn, assignmentsColumn, caColumn, projectColumn, examColumn, attendanceColumn, participationColumn, gradeColumn);
 
+    }
+
+    ObservableList<User> instructorData = FXCollections.observableArrayList();
+    private void prepopulateInstructor(){
+        List<User> instructors = userDao.findAll();
+        instructorData.addAll(instructors);
+
+        courseInstructorInput.setConverter(new StringConverter<User>() {
+            @Override
+            public String toString(User instructor) {
+                return instructor == null? null : instructor.getName();
+            }
+
+            @Override
+            public User fromString(String s) {
+                return null;
+            }
+        });
+
+        courseInstructorInput.setCellFactory(param -> new ListCell<User>(){
+            @Override
+            protected void updateItem(User item, boolean empty){
+                super.updateItem(item, empty);
+                if(item == null || empty){
+                    setText(null);
+                }else{
+                    setText(item.getName());
+                }
+            }
+        });
+        courseInstructorInput.getItems().addAll(instructorData);
     }
 }
