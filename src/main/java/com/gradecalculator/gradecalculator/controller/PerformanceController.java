@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+@SuppressWarnings({"unused", "unchecked"})
 public class PerformanceController implements Initializable {
 
     @FXML
@@ -240,10 +241,11 @@ public class PerformanceController implements Initializable {
            //fill the performance table wth the selected student's performance if student performance is not empty
            if(!selectedStudent.getPerformances().isEmpty()){
                performanceTableView.getItems().clear();
+               performancesData.clear();
                 // map the columns with the database data table columns
 
                 //add performance data to table
-                performancesData.addAll(selectedStudent.getPerformances());
+                performancesData.addAll(performanceService.getPerformancesByUserId(selectedStudent.getId()));
                 performanceTableView.setItems(performancesData);
             }
 
@@ -294,6 +296,14 @@ public class PerformanceController implements Initializable {
                     examScoreInput.setText("0");
                     attendanceScoreInput.setText("0");
                     participationScoreInput.setText("0");
+                    studentTableView.getItems().stream().filter(s -> {
+                        if(s.equals(selectedStudent)){
+                            s.getPerformances().add(performance);
+                            return true;
+                        }
+
+                        return false;
+                    });
 
                     addGradeErrorMessage.setText("Grade added successfully");
                     //todo make the error and success message animated to setTimeOut
@@ -385,16 +395,20 @@ public class PerformanceController implements Initializable {
     @FXML
     void searchStudents(KeyEvent event)  {
         String keyword = searchStudentInput.getText();
+        List<Student> students;
         if(!keyword.isBlank()){
             String query = "SELECT t FROM Student t WHERE t.firstName LIKE '%" + keyword + "%' OR t.middleName LIKE '%" + keyword + "%' OR t.lastName LIKE '%" + keyword + "%'";
             studentTableView.getItems().clear();
-            List<Student> students = studentService.getStudentsQuery(query);
+            performanceTableView.getItems().clear();
+            students = studentService.getStudentsQuery(query);
             studentTableView.getItems().addAll(students);
         }else{
             performanceTableView.getItems().clear();
             studentTableView.getItems().clear();
-            List<Student> students = studentService.getAllStudents();
-            studentTableView.getItems().addAll(students);
+            studentsData.clear();
+            students = studentService.getAllStudents();
+            studentsData.addAll(students);
+            studentTableView.setItems(studentsData);
         }
     }
 

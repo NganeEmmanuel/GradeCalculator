@@ -1,0 +1,127 @@
+---
+title: "Grade Calculator Documentation"
+author: "Ngane Emmanuel"
+date: "`r Sys.Date()`"
+output: 
+  pdf_document:
+    toc: true
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Student Grade Calculator Software Documentation
+
+## Introduction
+
+The Student Grade Calculator is a software application designed to assist instructors in managing and calculating grades for students. It provides a user-friendly interface for adding grades, generating reports, and performing calculations based on different assessment components.
+
+## Requirements
+
+The Student Grade Calculator software should fulfill the following requirements:
+
+- R3: Display student information and performance in a student report.
+- R4: Enable instructors to add grades for students based on different assessments.
+- R5: Support the addition of new students to the system.
+- R6: Calculate the final grade for each student based on their assessment scores.
+- R7: Allow the addition of new instructors to the system.
+- R8: Provide the capability to add new courses to the system.
+
+## Design
+
+The Student Grade Calculator software will follow a client-server architecture, where the client application will be responsible for the user interface and interaction, and the server will handle the storage and processing of data. The software will utilize a database to store student information, grades, courses, and instructor details.
+
+## Implementation
+
+The implementation of the Student Grade Calculator software will involve the following components:
+
+1. User Interface: The client application will be developed using a suitable programming framework (e.g., Python with Flask or Java with JavaFX) to provide a user-friendly interface for interacting with the system.
+
+2. Database: A relational database management system (e.g., MySQL or PostgreSQL) will be used to store and manage the data related to students, grades, courses, and instructors.
+
+3. Server-side Logic: The server-side logic will handle the processing of user requests, validation of data, and calculation of final grades based on the assessment scores. Error handling mechanisms will be implemented at various stages to handle unexpected situations and provide informative error messages to the users.
+
+### Adding a Student
+
+1. When an instructor navigates to the "Add Student" tab in the user interface, a form will be displayed with fields to enter the student's information (e.g., name, student ID, email).
+2. The instructor will fill in the required fields and click the "Add Student" button.
+3. The client application will send a request to the server-side logic, which will validate the input data and add the student's information to the database.
+4. If the student is successfully added, a success message will be displayed to the instructor. Otherwise, an error message will be shown, indicating the specific issue encountered (e.g., duplicate student ID) and suggesting corrective actions.
+
+### Adding a Grade
+
+1. When an instructor selects a student from the user interface, a form will be displayed to enter the assessment details (e.g., assignment name, score, maximum possible score).
+2. The instructor will fill in the required fields and click the "Add Grade" button.
+3. The client application will send a request to the server-side logic, which will validate the input data and associate the grade with the selected student in the database.
+4. The server-side logic will calculate the weighted average of all the assessment scores for the student and update the final grade accordingly.
+5. If the grade is successfully added, a success message will be displayed to the instructor. Otherwise, an error message will be shown, indicating the specific issue encountered (e.g., invalid score) and suggesting corrective actions.
+
+### Displaying Scores when a Student is Selected
+
+1. In the "Student Report" tab, a table view will display the list of students.
+2. When an instructor selects a student from the table view, the client application will send a request to the server-side logic to retrieve the student's assessment scores from the database.
+3. The server-side logic will fetch the scores associated with the selected student and send them back to the client application.
+4. The client application will update the user interface to display the scores in a table or any other suitable format.
+
+### Generating a Report
+
+1. In the "Student Report" tab, after selecting a student and displaying their scores, an instructor can click the "Generate Report" button.
+2. The client application will send a request to the server-side logic, indicating the student for whom the report needs to be generated.
+3. The server-side logic will retrieve the relevant data (e.g., student information, assessment scores) from the database and generate a report.
+4. The report can be generated in one formats, such as a excell.
+5. The generated report will be saved in the reports directory of the application
+
+In the implementation section, the focus is on describing how the different functionalities, such as adding a student, displaying scores when a student is selected, and generating a report, will be implemented in the software. It emphasizes the interactions between the user interface, server-side logic, and the database, explaining the flow of data and the necessary steps for each action.
+
+## Installation
+
+To install the Student Grade Calculator software, follow these steps:
+1. Download the installation package from the official website.
+2. Double-click the installation file to start the installation process.
+3. Follow the on-screen instructions to complete the installation.
+4. Once the installation is complete, you can launch the Student Grade Calculator software.
+
+## User Guide
+
+The following instructions will help you use the Student Grade Calculator software effectively.
+
+### Login
+
+1. Launch the Student Grade Calculator software.
+2. Enter your username and password on the login screen.
+3. Click the "Login" button.
+4. If the login is successful, you will be taken to the dashboard/main view. If there are any errors, an appropriate error message will be displayed.
+
+### Dashboard/Main View
+
+1. The dashboard/main view contains tabs for different functionalities.
+2. Click on the desired tab to navigate to the corresponding section.
+
+### Student Report
+
+1. The Student Report tab displays two table views: one for student information and another for student performance.
+2. Select a student from the student table view to view their performance in the performance table view.
+3. Click the "Generate Report" button to generate a report based on the selected student's performance.
+
+### Add Grade
+
+1. Navigate to the Add Grade tab.
+2. Select a student from the available student list.
+3. Enter scores for different assessments (assignment, ca, projects, exam, attendance, and participation).
+4. Click the "Add Grade" button to add the grades for the selected student.
+
+### Add Student
+
+1. Navigate to the Add Student tab.
+2. Fill in the required fields (name, student ID, etc.) to add a new student.
+3. The student table view in the Student Report and Add Grade sections will be updated to reflect the new student.
+
+### Calculate
+
+1. Navigate to the Calculate tab.
+2. Select a student and a course.
+3... (Rest of the User Guide section, Troubleshooting, FAQs, and Support and Contact Information sections remain the same as the previous code)
+
+The sections on requirements, design, and implementation provide an overview of the software's functional and architectural aspects. The installation section explains how to install the software, and the user guide section provides instructions on how to use the software's various features.

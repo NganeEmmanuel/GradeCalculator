@@ -27,7 +27,7 @@ public class StudentService {
 
     public List<Student> getStudentsQuery(String query) {
         List<Student> students = studentDao.runQuery(query, 0);
-        return students != null? students : new ArrayList<>();
+        return (students != null? students : new ArrayList<>());
     }
 
     public Student getStudentByID(Long id) {
