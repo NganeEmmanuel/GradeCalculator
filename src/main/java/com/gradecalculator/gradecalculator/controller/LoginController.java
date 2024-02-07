@@ -63,7 +63,7 @@ public class LoginController {
                 // allow user to access the dashboard of the app
                 Stage stage = (Stage) loginBtn.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("UI/performance-view.fxml"));
-                Scene scene = new Scene(fxmlLoader.load(), 950, 700);
+                Scene scene = new Scene(fxmlLoader.load(), 1010, 700);
                 stage.setTitle("Student Grade Calculator");
                 stage.setScene(scene);
                 stage.setResizable(false);

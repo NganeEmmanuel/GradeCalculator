@@ -22,24 +22,6 @@ import java.util.List;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-//        UserDao userDao = new UserDao();
-//        List<UserAuthority> authorities = new ArrayList<>();
-//        authorities.add(UserAuthority.ADMIN);
-//        User user = new User("Ngane", "emmanuel", "example@gmail.com","test123", UserStatus.ACTIVE, authorities);
-//        userDao.add(user);
-//        Course course = new Course("Java Programming 1", "ICT2143");
-//        course.setCourseInstructor(userDao.findById(1L).orElse(null));
-//        CourseDao courseDao = new CourseDao();
-////        courseDao.add(course);
-//        StudentDao studentDao = new StudentDao();
-//        Performance performance = new Performance(studentDao.findById(1L).orElse(null), courseDao.findById(1L).orElse(null));
-//        PerformanceDao performanceDao = new PerformanceDao();
-//        performanceDao.add(performance);
-//        System.setProperty("javafx.runtime.version", "20.0.2");
-        System.out.println("JavaFX Version: " + System.getProperty("javafx.version"));
-        System.out.println("JavaFX Runtime Version: " + System.getProperty("javafx.runtime.version"));
-
-        System.out.println(InputValidator.isDouble(""));
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("UI/login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 779, 520);
         stage.setTitle("Login");

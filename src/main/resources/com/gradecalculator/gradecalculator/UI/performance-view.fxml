@@ -126,22 +126,52 @@
                                                                </font>
                                                             </Label>
                                                             <Separator layoutX="5.0" layoutY="44.0" prefHeight="0.0" prefWidth="316.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-                                                            <ComboBox fx:id="courseSelectorInput" layoutX="149.0" layoutY="66.0" prefWidth="150.0" styleClass="text-field" stylesheets="@../css/login.css" AnchorPane.rightAnchor="27.0" />
+                                                            <ComboBox fx:id="courseSelectorInput" layoutX="149.0" layoutY="66.0" prefHeight="26.0" prefWidth="143.0" styleClass="text-field" stylesheets="@../css/login.css" AnchorPane.rightAnchor="27.0" />
                                                             <Label layoutX="14.0" layoutY="70.0" text="Select Course * : " AnchorPane.leftAnchor="14.0" />
                                                             <Label layoutX="14.0" layoutY="123.0" text="Assignment Score :" />
-                                                            <TextField fx:id="assignmentScoreInput" layoutX="150.0" layoutY="119.0" styleClass="text-field" stylesheets="@../css/login.css" AnchorPane.rightAnchor="27.0" />
+                                                            <TextField fx:id="assignmentScoreInput" layoutX="150.0" layoutY="119.0" prefHeight="26.0" prefWidth="91.0" styleClass="text-field" stylesheets="@../css/login.css" AnchorPane.rightAnchor="85.0" />
                                                             <Label layoutX="14.0" layoutY="165.0" text="CA Score :" />
-                                                            <TextField fx:id="caScoreInput" layoutX="150.0" layoutY="161.0" styleClass="text-field" stylesheets="@../css/login.css" AnchorPane.rightAnchor="27.0" />
+                                                            <TextField fx:id="caScoreInput" layoutX="150.0" layoutY="161.0" prefHeight="26.0" prefWidth="92.0" styleClass="text-field" stylesheets="@../css/login.css" AnchorPane.rightAnchor="84.0" />
                                                             <Label layoutX="14.0" layoutY="207.0" text="Project Score :" />
-                                                            <TextField fx:id="projectScoreInput" layoutX="150.0" layoutY="203.0" styleClass="text-field" stylesheets="@../css/login.css" AnchorPane.rightAnchor="27.0" />
+                                                            <TextField fx:id="projectScoreInput" layoutX="150.0" layoutY="203.0" prefHeight="26.0" prefWidth="93.0" styleClass="text-field" stylesheets="@../css/login.css" AnchorPane.rightAnchor="83.0" />
                                                             <Label layoutX="14.0" layoutY="249.0" text="Exam Score :" />
-                                                            <TextField fx:id="examScoreInput" layoutX="150.0" layoutY="245.0" styleClass="text-field" stylesheets="@../css/login.css" AnchorPane.rightAnchor="27.0" />
+                                                            <TextField fx:id="examScoreInput" layoutX="150.0" layoutY="245.0" prefHeight="26.0" prefWidth="93.0" styleClass="text-field" stylesheets="@../css/login.css" AnchorPane.rightAnchor="83.0" />
                                                             <Label layoutX="11.0" layoutY="294.0" text="Attendance Score :" />
-                                                            <TextField fx:id="attendanceScoreInput" layoutX="150.0" layoutY="290.0" styleClass="text-field" stylesheets="@../css/login.css" AnchorPane.rightAnchor="27.0" />
+                                                            <TextField fx:id="attendanceScoreInput" layoutX="150.0" layoutY="290.0" prefHeight="26.0" prefWidth="94.0" styleClass="text-field" stylesheets="@../css/login.css" AnchorPane.rightAnchor="82.0" />
                                                             <Label layoutX="11.0" layoutY="336.0" text="Participation Score :" />
-                                                            <TextField fx:id="participationScoreInput" layoutX="150.0" layoutY="332.0" styleClass="text-field" stylesheets="@../css/login.css" AnchorPane.rightAnchor="27.0" />
+                                                            <TextField fx:id="participationScoreInput" layoutX="150.0" layoutY="332.0" prefHeight="26.0" prefWidth="97.0" styleClass="text-field" stylesheets="@../css/login.css" AnchorPane.rightAnchor="79.0" />
                                                             <Button fx:id="addGradeBtn" layoutX="109.0" layoutY="448.0" mnemonicParsing="false" onMouseClicked="#addGrade" prefHeight="25.0" prefWidth="143.0" styleClass="filter-applyBtn" stylesheets="@../css/accountView.css" text="Add Grade" />
                                                             <Label fx:id="addGradeErrorMessage" layoutX="18.0" layoutY="396.0" prefHeight="27.0" prefWidth="289.0" style="-fx-alignment: center;" />
+                                                            <Label layoutX="241.0" layoutY="119.0" prefHeight="26.0" prefWidth="57.0" styleClass="text-field" stylesheets="@../css/login.css" text=" / 10" AnchorPane.rightAnchor="28.0">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label layoutX="241.0" layoutY="161.0" prefHeight="26.0" prefWidth="57.0" styleClass="text-field" stylesheets="@../css/login.css" text=" / 20" AnchorPane.rightAnchor="28.0">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label layoutX="241.0" layoutY="203.0" prefHeight="26.0" prefWidth="57.0" styleClass="text-field" stylesheets="@../css/login.css" text=" / 20" AnchorPane.rightAnchor="28.0">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label layoutX="241.0" layoutY="245.0" prefHeight="26.0" prefWidth="57.0" styleClass="text-field" stylesheets="@../css/login.css" text=" / 40" AnchorPane.rightAnchor="28.0">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label layoutX="241.0" layoutY="290.0" prefHeight="26.0" prefWidth="57.0" styleClass="text-field" stylesheets="@../css/login.css" text=" / 05" AnchorPane.rightAnchor="28.0">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label layoutX="247.0" layoutY="332.0" prefHeight="26.0" prefWidth="52.0" styleClass="text-field" stylesheets="@../css/login.css" text=" / 05" AnchorPane.rightAnchor="28.0">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                            </Label>
                                                          </children>
                                                       </AnchorPane>
                                                    </children>
